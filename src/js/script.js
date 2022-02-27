@@ -83,7 +83,6 @@
     }
     initAccordion() {
       const thisProduct = this;
-      console.log('initacordion:');
 
       /* find the clickable trigger (the element that should react to clicking) */
       const clickableTrigger = thisProduct.element.querySelector(select.menuProduct.clickable);
@@ -95,17 +94,19 @@
         event.preventDefault();
 
         /* find active product (product that has active class) */
-        const activeProduct = document.querySelector(classNames.menuProduct.wrapperActive);
+        const activeProduct = document.querySelectorAll(select.all.menuProducts);
         console.log('activeProducts:', activeProduct);
+        for (let activeOneProduct of activeProduct) {
+          /* if there is active product and it's not thisProduct.element, remove class active from it */
+          if (activeOneProduct != thisProduct.element) {
+            console.log('activeOnePorduct;', activeOneProduct);
 
-        /* if there is active product and it's not thisProduct.element, remove class active from it */
-        if (clickableTrigger == activeProduct && thisProduct.element != clickableTrigger) {
+            activeOneProduct.classList.remove('active');
+            console.log('class:', activeOneProduct.getAttribute('class'));
 
-          activeProduct.classList.remove('active');
-          console.log('if działa', activeProduct);
-
-          /* toggle active class on thisProduct.element */
-        } else (thisProduct.element.classList.toggle('active'));
+            /* toggle active class on thisProduct.element */
+          } else thisProduct.element.classList.toggle('active');
+        }
       });
 
     }
