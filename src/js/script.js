@@ -170,45 +170,30 @@
 
           //check if paramId.optionId is marker on formData
 
-          const formDataIncludesOption = formData[paramId].includes(optionId);
+          const optionSelected = formData[paramId].includes(optionId);
 
-          console.log('formDataIncludesOption:', formDataIncludesOption);
+          console.log('optionSelected:', optionSelected);
           console.log('formData[paramId]', formData[paramId]);
           console.log(optionId);
 
-          const formDataIncludesCathegory = formData.hasOwnProperty(paramId);
-          console.log('fornDataIncludesCathegory', formDataIncludesCathegory);
+          const cathegorySelected = formData.hasOwnProperty(paramId);
+          console.log('fornDataIncludesCathegory', cathegorySelected);
 
-          if (formDataIncludesCathegory == true) {
-            if (formDataIncludesOption == true) {
-              if (option.default == true) {
-                console.log('is option default?:', option.default);
-
-                const priceOption = option.price;
-                console.log('default price:', priceOption);
-
-                price += priceOption;
-                console.log(price);
-
-              } else if (option.default !== true) {
-                const priceOption = option.price;
-                price += priceOption;
-                console.log(price);
-              } else {
-                const priceOption = option.price;
-                price -= priceOption;
-                console.log(price);
-              }
+          if (cathegorySelected === true) {
+            const optionSelected = formData[paramId].includes(optionId);
+            if (optionSelected === true && option.default !== true) {
+              const priceOption = option.price;
+              price += priceOption;
+            } else if (optionSelected !== true && option.default === true) {
+              const priceOption = option.price;
+              price -= priceOption;
             }
           }
         }
       }
-
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
-
     }
-
   }
 
   const app = {
