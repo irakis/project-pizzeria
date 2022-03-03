@@ -54,9 +54,11 @@
 
   class Product {
     constructor(id, data) {
+
       const thisProduct = this;
 
       thisProduct.id = id;
+
       thisProduct.data = data;
 
       thisProduct.renderInMenu();
@@ -67,10 +69,12 @@
 
       thisProduct.initOrderForm();
 
+      thisProduct.initAmountWidget();
+
       thisProduct.processOrder();
 
-      console.log('new Product:', thisProduct);
     }
+
     renderInMenu() {
       const thisProduct = this;
 
@@ -97,6 +101,7 @@
       thisProduct.cartButton = thisProduct.element.querySelector(select.menuProduct.cartButton);
       thisProduct.priceElem = thisProduct.element.querySelector(select.menuProduct.priceElem);
       thisProduct.imageWrapper = thisProduct.element.querySelector(select.menuProduct.imageWrapper);
+      thisProduct.amountWidgetElem = thisProduct.element.querySelector(select.menuProduct.amountWidget);
     }
 
     initAccordion() {
@@ -112,11 +117,11 @@
 
         /* find active product (product that has active class) */
         const activeProduct = document.querySelectorAll(select.all.menuProducts);
-        console.log('activeProducts:', activeProduct);
+        //console.log('activeProducts:', activeProduct);
         for (let activeOneProduct of activeProduct) {
           /* if there is active product and it's not thisProduct.element, remove class active from it */
           if (activeOneProduct != thisProduct.element) {
-            console.log('activeOnePorduct;', activeOneProduct);
+            //console.log('activeOnePorduct;', activeOneProduct);
 
             activeOneProduct.classList.remove('active');
 
@@ -161,27 +166,27 @@
       for (let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        console.log(paramId, param);
+        //console.log(paramId, param);
 
         // for every option in this category
         for (let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          console.log(optionId, option);
+          //console.log(optionId, option);
 
           //check if paramId.optionId is marker on formData
 
           const optionSelected = formData[paramId].includes(optionId);
 
-          console.log('optionSelected:', optionSelected);
-          console.log('formData[paramId]', formData[paramId]);
-          console.log(optionId);
+          //console.log('optionSelected:', optionSelected);
+          //console.log('formData[paramId]', formData[paramId]);
+          //console.log(optionId);
 
           const cathegorySelected = formData.hasOwnProperty(paramId);
-          console.log('fornDataIncludesCathegory', cathegorySelected);
+          //console.log('fornDataIncludesCathegory', cathegorySelected);
 
           const optionImage = thisProduct.imageWrapper.querySelector('.' + paramId + '-' + optionId);
-          console.log(optionImage);
+          //console.log(optionImage);
 
           if (cathegorySelected === true && optionImage !== null) {
 
@@ -213,6 +218,32 @@
       }
       // update calculated price in the HTML
       thisProduct.priceElem.innerHTML = price;
+    }
+
+    initAmountWidget() {
+      const thisProduct = this;
+
+      thisProduct.amountWidget = new AmountWidget(thisProduct.amountWidgetElem);
+    }
+  }
+
+  class AmountWidget {
+    constructor(element) {
+      const thisWidget = this;
+
+      console.log('AmountWidget:', thisWidget);
+      console.log('constructoe arguments:', element);
+
+      thisWidget.getElements(element);
+
+    }
+    getElements(element) {
+      const thisWidget = this;
+
+      thisWidget.element = element;
+      thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
+      thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
+      thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
     }
   }
 
