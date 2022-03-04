@@ -172,13 +172,13 @@
         for (let optionId in param.options) {
           // determine option value, e.g. optionId = 'olives', option = { label: 'Olives', price: 2, default: true }
           const option = param.options[optionId];
-          //console.log(optionId, option);
+          console.log(optionId, option);
 
           //check if paramId.optionId is marker on formData
 
           const optionSelected = formData[paramId].includes(optionId);
 
-          //console.log('optionSelected:', optionSelected);
+          console.log('optionSelected:', optionSelected);
           //console.log('formData[paramId]', formData[paramId]);
           //console.log(optionId);
 
@@ -235,6 +235,8 @@
       console.log('constructoe arguments:', element);
 
       thisWidget.getElements(element);
+      thisWidget.setValue(thisWidget.input.value);
+      thisWidget.initAction();
 
     }
     getElements(element) {
@@ -244,6 +246,38 @@
       thisWidget.input = thisWidget.element.querySelector(select.widgets.amount.input);
       thisWidget.linkDecrease = thisWidget.element.querySelector(select.widgets.amount.linkDecrease);
       thisWidget.linkIncrease = thisWidget.element.querySelector(select.widgets.amount.linkIncrease);
+    }
+    setValue(value) {
+      const thisWidget = this;
+
+      const newValue = parseInt(value);
+      console.log('newValue', newValue, value);
+
+      /*TODO : Add validation*/
+      if (thisWidget.value !== newValue && !isNaN(newValue)) {
+
+        thisWidget.value = newValue;
+      }
+
+      thisWidget.input.value = thisWidget.value;
+      console.log(thisWidget.value);
+    }
+    initAction() {
+      const thisWidget = this;
+      thisWidget.input.addEventListener('change', function () {
+
+        thisWidget.setValue(thisWidget.input.value);
+      });
+
+      thisWidget.linkDecrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value -= 1);
+      });
+
+      thisWidget.linkIncrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisWidget.setValue(thisWidget.value += 1);
+      });
     }
   }
 
