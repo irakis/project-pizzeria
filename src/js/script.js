@@ -249,19 +249,24 @@
     }
     setValue(value) {
       const thisWidget = this;
+      console.log('what is value?: ', value);
 
       const newValue = parseInt(value);
       console.log('newValue', newValue, value);
 
       /*TODO : Add validation*/
-      if (thisWidget.value !== newValue && !isNaN(newValue)) {
+      if ((thisWidget.value !== newValue && !isNaN(newValue)) && (newValue <= settings.amountWidget.defaultMax) && (newValue >= settings.amountWidget.defaultMin)) {
 
         thisWidget.value = newValue;
-      }
+        console.log('new valu after if:', newValue);
 
-      thisWidget.input.value = thisWidget.value;
-      console.log(thisWidget.value);
+        thisWidget.input.value = thisWidget.value;
+        console.log(thisWidget.value, thisWidget.input.value);
+      } else {
+        thisWidget.input.value = thisWidget.input.defaultValue;
+      }
     }
+
     initAction() {
       const thisWidget = this;
       thisWidget.input.addEventListener('change', function () {
