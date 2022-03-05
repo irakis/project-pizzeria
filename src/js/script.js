@@ -231,6 +231,8 @@
     constructor(element) {
       const thisWidget = this;
 
+      thisWidget.value = settings.amountWidget.defaultValue;
+
       console.log('AmountWidget:', thisWidget);
       console.log('constructoe arguments:', element);
 
@@ -249,13 +251,12 @@
     }
     setValue(value) {
       const thisWidget = this;
-      console.log('what is value?: ', value);
 
       const newValue = parseInt(value);
       console.log('newValue', newValue, value);
 
       /*TODO : Add validation*/
-      if ((thisWidget.value !== newValue && !isNaN(newValue)) && (newValue <= settings.amountWidget.defaultMax) && (newValue >= settings.amountWidget.defaultMin)) {
+      if (thisWidget.value !== newValue && !isNaN(newValue) && newValue <= settings.amountWidget.defaultMax && newValue >= settings.amountWidget.defaultMin) {
 
         thisWidget.value = newValue;
         console.log('new valu after if:', newValue);
@@ -263,26 +264,31 @@
         thisWidget.input.value = thisWidget.value;
         console.log(thisWidget.value, thisWidget.input.value);
       } else {
-        thisWidget.input.value = thisWidget.input.defaultValue;
+        thisWidget.input.value = settings.amountWidget.defaultValue;
+        console.log(thisWidget.input.value);
       }
     }
 
     initAction() {
       const thisWidget = this;
+
       thisWidget.input.addEventListener('change', function () {
 
         thisWidget.setValue(thisWidget.input.value);
       });
 
+
       thisWidget.linkDecrease.addEventListener('click', function (event) {
         event.preventDefault();
-        thisWidget.setValue(thisWidget.value -= 1);
+        thisWidget.setValue(thisWidget.value - 1);
+
       });
 
       thisWidget.linkIncrease.addEventListener('click', function (event) {
         event.preventDefault();
-        thisWidget.setValue(thisWidget.value += 1);
+        thisWidget.setValue(thisWidget.value + 1);
       });
+
     }
   }
 
