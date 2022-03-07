@@ -358,7 +358,7 @@
     }
     initAction() {
       const thisCart = this;
-      thisCart.dom.toggleTrigger.addEventListener('click', function (event) {
+      thisCart.dom.toggleTrigger.addEventListener('click', function () {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
     }
