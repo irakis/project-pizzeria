@@ -108,6 +108,8 @@
 
       thisProduct.processOrder();
 
+      thisProduct.prepareCartProduct();
+
     }
 
     renderInMenu() {
@@ -118,7 +120,7 @@
 
       /* create element using utils.createElementFromHTML */
       thisProduct.element = utils.createDOMFromHTML(generatedHTML);
-
+      console.log(thisProduct.element);
       /* find menu */
       const menuContainer = document.querySelector(select.containerOf.menu);
 
@@ -184,6 +186,7 @@
       thisProduct.cartButton.addEventListener('click', function (event) {
         event.preventDefault();
         thisProduct.processOrder();
+        thisProduct.addToCart();
       });
     }
 
@@ -255,7 +258,10 @@
       /* multiply price by amount */
 
       price *= thisProduct.amountWidget.value;
-      console.log(thisProduct.amountWidget.value);
+      thisProduct.priceSingle = price;
+
+      console.log('thisProduct.amounWidget.value',thisProduct.amountWidget.value);
+      console.log('price',price);
 
       thisProduct.priceElem.innerHTML = price;
     }
@@ -267,7 +273,29 @@
       thisProduct.amountWidgetElem.addEventListener('updated', function () {
         thisProduct.processOrder();
       });
+    }
 
+    addToCart (){
+      const thisProduct = this;
+
+      app.cart.add(productSummary);
+    }
+
+    prepareCartProduct(){
+      const thisProduct = this;
+      console.log(thisProduct);
+
+      const productSummary = {};
+        productSummary.id = thisProduct.id,
+        productSummary.name = thisProduct.data.name,
+        productSummary.amount = thisProduct.amountWidget.value,
+        productSummary.priceSingle = thisProduct.priceSingle,
+        productSummary.price = thisProduct.priceSingle*thisProduct.amountWidget.value,
+        productSummary.params = {},
+ 
+        console.log('productSummary',productSummary);
+
+        return productSummary;
     }
   }
 
@@ -341,6 +369,10 @@
       const event = new Event('updated');
       thisWidget.element.dispatchEvent(event);
     }
+
+    prepareCardProductParams() {
+      
+    }
   }
   class Cart {
     constructor(element) {
@@ -356,6 +388,11 @@
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = document.querySelector(select.cart.toggleTrigger);
     }
+    add (menuProduct) {
+      //const thisCart = this;
+      console.log('adding product', menuProduct);
+    }
+
     initAction() {
       const thisCart = this;
       thisCart.dom.toggleTrigger.addEventListener('click', function () {
