@@ -110,6 +110,8 @@
 
       thisProduct.prepareCartProduct();
 
+      thisProduct.prepareCardProductParams();
+
     }
 
     renderInMenu() {
@@ -204,7 +206,7 @@
       for (let paramId in thisProduct.data.params) {
         // determine param value, e.g. paramId = 'toppings', param = { label: 'Toppings', type: 'checkboxes'... }
         const param = thisProduct.data.params[paramId];
-        //console.log(paramId, param);
+        console.log(paramId, param);
 
         // for every option in this category
         for (let optionId in param.options) {
@@ -217,8 +219,8 @@
           const optionSelected = formData[paramId].includes(optionId);
 
           console.log('optionSelected:', optionSelected);
-          //console.log('formData[paramId]', formData[paramId]);
-          //console.log(optionId);
+          console.log('formData[paramId]', formData[paramId]);
+          console.log(optionId);
 
           const cathegorySelected = formData.hasOwnProperty(paramId);
           //console.log('fornDataIncludesCathegory', cathegorySelected);
@@ -257,11 +259,13 @@
       // update calculated price in the HTML
       /* multiply price by amount */
 
-      price *= thisProduct.amountWidget.value;
       thisProduct.priceSingle = price;
+      console.log('thisProduct.priceSingle', thisProduct.priceSingle);
 
-      console.log('thisProduct.amounWidget.value',thisProduct.amountWidget.value);
-      console.log('price',price);
+      price *= thisProduct.amountWidget.value;
+
+      console.log('thisProduct.amounWidget.value', thisProduct.amountWidget.value);
+      console.log('price', price);
 
       thisProduct.priceElem.innerHTML = price;
     }
@@ -275,29 +279,68 @@
       });
     }
 
-    addToCart (){
-      const thisProduct = this;
+    addToCart() {
+      //const thisProduct = this;
 
-      app.cart.add(productSummary);
+      //app.cart.add(productSummary);
     }
 
-    prepareCartProduct(){
+    prepareCartProduct() {
       const thisProduct = this;
       console.log(thisProduct);
 
       const productSummary = {};
-        productSummary.id = thisProduct.id,
-        productSummary.name = thisProduct.data.name,
-        productSummary.amount = thisProduct.amountWidget.value,
-        productSummary.priceSingle = thisProduct.priceSingle,
-        productSummary.price = thisProduct.priceSingle*thisProduct.amountWidget.value,
-        productSummary.params = {},
- 
-        console.log('productSummary',productSummary);
+      productSummary.id = thisProduct.id,
+      productSummary.name = thisProduct.data.name,
+      productSummary.amount = thisProduct.amountWidget.value,
+      productSummary.priceSingle = thisProduct.priceSingle,
+      productSummary.price = thisProduct.priceSingle * thisProduct.amountWidget.value,
+      productSummary.params = {},
 
-        return productSummary;
+      console.log('productSummary', productSummary);
+
+      return productSummary;
+    }
+
+    prepareCardProductParams() {
+
+      const thisProduct = this;
+
+      const formData = utils.serializeFormToObject(thisProduct.form);
+      console.log('formData', formData);
+
+      const params = {};
+
+
+      for (let paramId in thisProduct.data.params) {
+
+        const param = thisProduct.data.params[paramId];
+        console.log(param);
+
+        params[paramId] = {
+          label: param.label,
+          options: {}
+        };
+        for (let optionId in param.options) {
+          const option = param.options[optionId];
+          const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
+          console.log(optionSelected);
+
+          if (optionSelected) {
+
+            params[paramId].options[optionId] = option.label,
+            console.log(params);
+            console.log(option.label);
+
+          }
+        }
+      }
+
+      console.log(params);
+      return params;
     }
   }
+
 
   class AmountWidget {
     constructor(element) {
@@ -370,9 +413,6 @@
       thisWidget.element.dispatchEvent(event);
     }
 
-    prepareCardProductParams() {
-      
-    }
   }
   class Cart {
     constructor(element) {
@@ -388,7 +428,7 @@
       thisCart.dom.wrapper = element;
       thisCart.dom.toggleTrigger = document.querySelector(select.cart.toggleTrigger);
     }
-    add (menuProduct) {
+    add(menuProduct) {
       //const thisCart = this;
       console.log('adding product', menuProduct);
     }
