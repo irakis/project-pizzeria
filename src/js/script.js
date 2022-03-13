@@ -198,7 +198,6 @@
           const option = param.options[optionId];
 
           //check if paramId.optionId is marker on formData
-          //const optionSelected = formData[paramId].includes(optionId);
 
           const cathegorySelected = formData.hasOwnProperty(paramId);
 
@@ -291,7 +290,6 @@
       for (let paramId in thisProduct.data.params) {
 
         const param = thisProduct.data.params[paramId];
-        console.log(param);
 
         params[paramId] = {
           label: param.label,
@@ -300,14 +298,11 @@
         for (let optionId in param.options) {
           const option = param.options[optionId];
           const optionSelected = formData[paramId] && formData[paramId].includes(optionId);
-          console.log(optionSelected);
 
           if (optionSelected) {
 
             params[paramId].options[optionId] = option.label,
             console.log(params);
-            console.log(option.label);
-
           }
         }
       }
@@ -404,21 +399,19 @@
       thisCart.dom.wrapper = element,
       thisCart.dom.toggleTrigger = document.querySelector(select.cart.toggleTrigger),
       thisCart.dom.productList = document.querySelector(select.cart.productList);
+      console.log(thisCart.dom);
     }
     add(menuProduct) {
       const thisCart = this;
 
       const generatedHTML = templates.cartProduct(menuProduct);
-      console.log('generatedHTML', generatedHTML);
+      const generatedDOM = utils.createDOMFromHTML(generatedHTML);
+      console.log(generatedDOM);
 
-      thisCart.element = utils.createDOMFromHTML(generatedHTML);
-      console.log('thisCart.element', thisCart.element);
+      thisCart.dom.productList.appendChild(generatedDOM);
 
-      const menuContainer = document.querySelector(select.cart.productList);
-      console.log('menuContainer', menuContainer);
-
-      menuContainer.appendChild(thisCart.element);
-
+      thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+      console.log(thisCart.products);
     }
 
     initAction() {
@@ -426,6 +419,58 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function () {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+    }
+  }
+  class CartProduct {
+    constructor(menuProduct, element) {
+      const thisCartProduct = this;
+
+      thisCartProduct.id = menuProduct.id,
+      thisCartProduct.name = menuProduct.name,
+      thisCartProduct.amount = menuProduct.amount,
+      thisCartProduct.priceSingle = menuProduct.priceSingle,
+      thisCartProduct.price = menuProduct.price,
+      thisCartProduct.params = menuProduct.params;
+
+      thisCartProduct.getElements(element);
+      console.log('thisCartProduct', thisCartProduct);
+
+      thisCartProduct.initAmountWidget();
+
+    }
+    getElements(element) {
+      const thisCartProduct = this;
+      thisCartProduct.dom = {};
+      thisCartProduct.dom.wrapper = element,
+      thisCartProduct.dom.amountWidget = element.querySelector(select.cartProduct.amountWidget),
+      thisCartProduct.dom.price = element.querySelector(select.cartProduct.price),
+      thisCartProduct.dom.edit = element.querySelector(select.cartProduct.edit),
+      thisCartProduct.dom.remove = element.querySelector(select.cartProduct.remove);
+      console.log('thisCartProduct', thisCartProduct.dom);
+    }
+
+    initAmountWidget() {
+      const thisCartProduct = this;
+
+      thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.wrapper);
+      console.log(thisCartProduct.amountWidget);
+
+      thisCartProduct.amountWidget.linkDecrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisCartProduct.amountWidget == (thisCartProduct.dom.amountWidget.value - 1);
+        thisCartProduct.price == thisCartProduct.amountWidget * thisCartProduct.priceSingle;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+        
+        console.log(thisCartProduct.price);
+      });
+      console.log(thisCartProduct.amountWidget.value, thisCartProduct.priceSingle);
+
+      thisCartProduct.amountWidget.linkIncrease.addEventListener('click', function (event) {
+        event.preventDefault();
+        thisCartProduct.amountWidget = (thisCartProduct.dom.amountWidget.value + 1);
+        thisCartProduct.price = thisCartProduct.amountWidget.value * thisCartProduct.priceSingle;
+        thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
+      });    
     }
   }
 
