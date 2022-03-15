@@ -371,17 +371,24 @@
       thisCart.dom = {},
       thisCart.dom.wrapper = element,
       thisCart.dom.toggleTrigger = document.querySelector(select.cart.toggleTrigger),
-      thisCart.dom.productList = document.querySelector(select.cart.productList);
+      thisCart.dom.productList = document.querySelector(select.cart.productList),
+      thisCart.dom.deliveryFee = document.querySelector(select.cart.deliveryFee),
+      thisCart.dom.subtotalPrice = document.querySelector(select.cart.subtotalPrice),
+      thisCart.dom.totalPrice = document.querySelector(select.cart.totalPrice),
+      console.log(thisCart.dom.totalPrice);
+
+      thisCart.dom.totalNumber = document.querySelector(select.cart.totalNumber);
+
     }
     add(menuProduct) {
       const thisCart = this;
 
       const generatedHTML = templates.cartProduct(menuProduct);
       const generatedDOM = utils.createDOMFromHTML(generatedHTML);
-
       thisCart.dom.productList.appendChild(generatedDOM);
-
       thisCart.products.push(new CartProduct(menuProduct, generatedDOM));
+
+      thisCart.update();
     }
 
     initAction() {
@@ -389,6 +396,35 @@
       thisCart.dom.toggleTrigger.addEventListener('click', function () {
         thisCart.dom.wrapper.classList.toggle(classNames.cart.wrapperActive);
       });
+    }
+    update() {
+      const thisCart = this;
+      const deliveryFee = settings.cart.defaultDeliveryFee;
+      
+      thisCart.totalNumber = 0;
+      thisCart.subtotalPrice = 0;
+      console.log('thiCart.Products',thisCart.products);
+
+      for(let cartProduct of thisCart.products){
+        thisCart.totalNumber = cartProduct.amount + thisCart.totalNumber;
+        thisCart.dom.totalNumber.innerHTML = thisCart.totalNumber;
+
+        thisCart.subtotalPrice = cartProduct.price + thisCart.subtotalPrice;
+        thisCart.dom.subtotalPrice.innerHTML = thisCart.subtotalPrice
+      }
+      
+      thisCart.totalPrice = thisCart.subtotalPrice + deliveryFee;
+
+      if(thisCart.totalNumber == 0) {
+        thisCart.totalPrice = 0
+      }else {
+        thisCart.totalPrice = thisCart.subtotalPrice + deliveryFee;
+      }
+      
+      thisCart.dom.totalPrice.innerHTML = thisCart.totalPrice;
+      
+      thisCart.dom.deliveryFee.innerHTML = deliveryFee;
+
     }
   }
   class CartProduct {
