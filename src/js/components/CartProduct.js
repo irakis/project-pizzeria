@@ -4,20 +4,17 @@ import AmountWidget from './AmountWidget.js';
 class CartProduct {
   constructor(menuProduct, element) {
     const thisCartProduct = this;
-    console.log('thisCartProduct',thisCartProduct);
-
     thisCartProduct.id = menuProduct.id,
     thisCartProduct.name = menuProduct.name,
     thisCartProduct.amount = menuProduct.amount,
     thisCartProduct.priceSingle = menuProduct.priceSingle,
     thisCartProduct.price = menuProduct.price,
     thisCartProduct.params = menuProduct.params;
-
     thisCartProduct.getElements(element);
     thisCartProduct.initAmountWidget();
     thisCartProduct.initAction();
-
   }
+
   getElements(element) {
     const thisCartProduct = this;
     thisCartProduct.dom = {};
@@ -30,22 +27,16 @@ class CartProduct {
 
   initAmountWidget() {
     const thisCartProduct = this;
-
     thisCartProduct.amountWidget = new AmountWidget(thisCartProduct.dom.amountWidget);
-
     thisCartProduct.dom.amountWidget.addEventListener('updated', function () {
-
       thisCartProduct.amount = thisCartProduct.amountWidget.value;  
-        
-      thisCartProduct.price = thisCartProduct.amountWidget.value * thisCartProduct.priceSingle;
-                
+      thisCartProduct.price = thisCartProduct.amountWidget.value * thisCartProduct.priceSingle; 
       thisCartProduct.dom.price.innerHTML = thisCartProduct.price;
     });
   }
+
   remove() {
     const thisCartProduct = this;
-    console.log(thisCartProduct);
-
     const event = new CustomEvent('remove',{
       bubbles: true,
       detail: {
@@ -55,6 +46,7 @@ class CartProduct {
     thisCartProduct.dom.wrapper.dispatchEvent(event);
     thisCartProduct.dom.wrapper.remove();
   }
+
   initAction() {
     const thisCartProduct = this;
     thisCartProduct.dom.edit.addEventListener('click', function(event) {
@@ -65,6 +57,7 @@ class CartProduct {
       thisCartProduct.remove(event);
     });
   }
+
   getData() {
     const thisCartProduct = this;
     const getData = {
