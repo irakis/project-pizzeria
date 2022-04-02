@@ -27,6 +27,7 @@ const app = {
         event.preventDefault();
         const id = clickedElement.getAttribute('href').replace('#','');
         thisApp.activatePage(id);
+        window.location.hash = '#/' + id;
       });
     }
   },
