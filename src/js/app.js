@@ -62,10 +62,8 @@ const app = {
       })
       .then(function (parsedResponse) {
         thisApp.data.products = parsedResponse;
-        console.log(parsedResponse);
         app.initMenu();
       });
-    console.log('thisApp.data', JSON.stringify(thisApp.data));
   },
 
   init: function () {
@@ -89,7 +87,6 @@ const app = {
   initBookig: function() {
     const thisApp= this;
     thisApp.booking = document.querySelector(select.containerOf.booking);
-    console.log(thisApp.booking);
     new Booking(thisApp.booking);
   },
 };
