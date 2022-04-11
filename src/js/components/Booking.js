@@ -11,7 +11,7 @@ class Booking {
     this.render(element);
     this.initWidgets();
     this.getData();
-    this.chooseTable();
+    this.initTables();
     this.choosenTable = '';
     console.log('zmienna choosenTable', this.choosenTable);
 
@@ -176,7 +176,7 @@ class Booking {
     });
   }
 
-  chooseTable() {
+  initTables() {
     const thisBooking = this;
     thisBooking.dom.floorPlan.addEventListener('click', function (event) {
       event.preventDefault();
@@ -187,7 +187,7 @@ class Booking {
       const clickedTable = parseInt(event.target.getAttribute('data-table'));
 
       if (event.target.classList.contains('table') && !event.target.classList.contains('booked')) {
-        event.target.classList.add(classNames.booking.chosen);
+        event.target.classList.add(classNames.booking.selected);
 
         thisBooking.choosenTable = clickedTable;
 
@@ -199,7 +199,7 @@ class Booking {
   resetTable() {
     const thisBooking = this;
     for (let table of thisBooking.dom.tables) {
-      table.classList.remove(classNames.booking.chosen);
+      table.classList.remove(classNames.booking.selected);
     }
   }
 
@@ -220,9 +220,12 @@ class Booking {
       if (starter.checked == true) {
         payload.starters.push(starter.value);
       }
-      thisBooking.booked[thisBooking.date][thisBooking.hour].push(thisBooking.choosenTable);
     }
+    thisBooking.booked[thisBooking.date][thisBooking.hour].push(thisBooking.choosenTable);
+
     console.log('payload', payload);
+    thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+
     const options = {
       method: 'POST',
       headers: {
@@ -230,11 +233,13 @@ class Booking {
       },
       body: JSON.stringify(payload),
     };
+
     fetch(url, options)
       .then(function (response) {
         return response.json();
       }).then(function (parsedResponse) {
         console.log('parsedResponse', parsedResponse);
+        console.log(thisBooking.booked);
       });
   }
 }
