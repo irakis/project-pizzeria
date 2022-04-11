@@ -19,7 +19,6 @@ class BaseWidget {
     const newValue = thisWidget.parseValue(value);
     if (newValue != thisWidget.correctValue && thisWidget.isValid(newValue)) {
       thisWidget.correctValue = newValue;
-      //thisWidget.dom.input.value = thisWidget.correctValue;
       thisWidget.announce();
     }
     thisWidget.renderValue();

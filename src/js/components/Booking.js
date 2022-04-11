@@ -12,8 +12,9 @@ class Booking {
     this.initWidgets();
     this.getData();
     this.chooseTable();
-    this.choosenTable = [];
-    console.log(this.choosenTable);
+    this.choosenTable = '';
+    console.log('zmienna choosenTable', this.choosenTable);
+
   }
 
   getData() {
@@ -131,7 +132,6 @@ class Booking {
         table.classList.remove(classNames.booking.tableBooked);
       }
     }
-    //thisBooking.booked[thisBooking.date][thisBooking.hour].push(thisBooking.choosenTable[0]);
   }
 
   render(element) {
@@ -147,6 +147,11 @@ class Booking {
     thisBooking.dom.hourPicker = elementDom.querySelector(select.widgets.hourPicker.wrapper);
     thisBooking.dom.tables = elementDom.querySelectorAll(select.booking.tables);
     thisBooking.dom.floorPlan = elementDom.querySelector(select.booking.floorPlan);
+    thisBooking.dom.phone = elementDom.querySelector(select.cart.phone);
+    thisBooking.dom.address = elementDom.querySelector(select.cart.address);
+    thisBooking.dom.starters = elementDom.querySelectorAll(select.booking.checkbox);
+    thisBooking.dom.tableSubmit = elementDom.querySelector(select.booking.forSubmit);
+
 
     element.appendChild(elementDom);
     console.log(thisBooking.dom);
@@ -165,38 +170,72 @@ class Booking {
       thisBooking.updateDOM();
       thisBooking.resetTable();
     });
+    thisBooking.dom.tableSubmit.addEventListener('click', function (event) {
+      event.preventDefault();
+      thisBooking.sendBooking();
+    });
   }
 
   chooseTable() {
     const thisBooking = this;
-    thisBooking.dom.floorPlan.addEventListener('click', function(event){
+    thisBooking.dom.floorPlan.addEventListener('click', function (event) {
       event.preventDefault();
       thisBooking.resetTable();
-      console.log(thisBooking.choosenTable);
-      const clickedTable = parseInt(event.target.getAttribute('data-table'));
-      console.log(clickedTable);
 
-      if(event.target.classList.contains('table') && !event.target.classList.contains('booked')){
+      console.log(thisBooking);
+
+      const clickedTable = parseInt(event.target.getAttribute('data-table'));
+
+      if (event.target.classList.contains('table') && !event.target.classList.contains('booked')) {
         event.target.classList.add(classNames.booking.chosen);
 
-        console.log('tablica chosenTable',thisBooking.choosenTable);
-        
-        thisBooking.choosenTable.push(clickedTable);
-        console.log('clickedTable',clickedTable);
-        thisBooking.booked[thisBooking.date][thisBooking.hour].push(thisBooking.choosenTable[0]);
+        thisBooking.choosenTable = clickedTable;
 
-        console.log(thisBooking.booked);
-      } else if(event.target.classList.contains('booked')){
+      } else if (event.target.classList.contains('booked')) {
         window.alert('Stolik niedostępny.');
       }
     });
   }
   resetTable() {
     const thisBooking = this;
-    for(let table of thisBooking.dom.tables) {
+    for (let table of thisBooking.dom.tables) {
       table.classList.remove(classNames.booking.chosen);
     }
-    thisBooking.choosenTable.splice(0,1);
+  }
+
+  sendBooking() {
+    const thisBooking = this;
+    const url = settings.db.url + '/' + settings.db.bookings;
+    const payload = {
+      date: thisBooking.datePicker.value,
+      hour: thisBooking.hourPicker.value,
+      table: thisBooking.choosenTable,
+      duration: parseInt(thisBooking.hoursAmount.value),
+      ppl: parseInt(thisBooking.peopleAmount.value),
+      starters: [],
+      phone: thisBooking.dom.phone.value,
+      address: thisBooking.dom.address.value,
+    };
+    for (let starter of thisBooking.dom.starters) {
+      if (starter.checked == true) {
+        payload.starters.push(starter.value);
+      }
+      thisBooking.booked[thisBooking.date][thisBooking.hour].push(thisBooking.choosenTable);
+    }
+    console.log('payload', payload);
+    const options = {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify(payload),
+    };
+    fetch(url, options)
+      .then(function (response) {
+        return response.json();
+      }).then(function (parsedResponse) {
+        console.log('parsedResponse', parsedResponse);
+      });
   }
 }
 export default Booking;
