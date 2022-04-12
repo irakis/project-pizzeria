@@ -225,6 +225,7 @@ class Booking {
 
     console.log('payload', payload);
     thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+    thisBooking.updateDOM();
 
     const options = {
       method: 'POST',
