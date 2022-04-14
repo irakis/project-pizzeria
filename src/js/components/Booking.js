@@ -154,7 +154,6 @@ class Booking {
 
 
     element.appendChild(elementDom);
-    console.log(thisBooking.dom);
   }
 
   initWidgets() {
@@ -224,8 +223,6 @@ class Booking {
     thisBooking.booked[thisBooking.date][thisBooking.hour].push(thisBooking.choosenTable);
 
     console.log('payload', payload);
-    thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
-    thisBooking.updateDOM();
 
     const options = {
       method: 'POST',
@@ -239,8 +236,10 @@ class Booking {
       .then(function (response) {
         return response.json();
       }).then(function (parsedResponse) {
+
+        thisBooking.makeBooked(payload.date, payload.hour, payload.duration, payload.table);
+        thisBooking.updateDOM();
         console.log('parsedResponse', parsedResponse);
-        console.log(thisBooking.booked);
       });
   }
 }
