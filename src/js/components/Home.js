@@ -1,12 +1,12 @@
 import { templates, select } from '../settings.js';
 import utils from '../utils.js';
-// import Carousel from './Carousel.js';
+import Carousel from './Carousel.js';
 
 class Home {
   constructor(element) {
     console.log('element w Home: ', element);
     this.render(element);
-    //this.initWidgets();
+    this.initWidgets();
   }
 
   render() {
@@ -22,6 +22,15 @@ class Home {
     thisHome.dom.homeWidget = document.querySelector(select.containerOf.homeWidget);
 
     thisHome.dom.wrapper.appendChild(elementDom);
+  }
+
+  initWidgets() {
+    new Carousel(thisHome.dom.homeWidget, {
+      autoPaly: true,
+      wrapAround: true,
+      cellAlign: 'center',
+      contain: true,
+    });
   }
 }
 
