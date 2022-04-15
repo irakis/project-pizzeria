@@ -4,6 +4,7 @@ import Carousel from './Carousel.js';
 
 class Home {
   constructor(element) {
+
     console.log('element w Home: ', element);
     this.render(element);
     this.initWidgets();
@@ -25,6 +26,7 @@ class Home {
   }
 
   initWidgets() {
+    const thisHome = this;
     new Carousel(thisHome.dom.homeWidget, {
       autoPaly: true,
       wrapAround: true,

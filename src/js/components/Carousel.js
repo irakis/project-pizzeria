@@ -1,6 +1,5 @@
 import utils from '../utils.js';
 import { templates, select } from '../settings.js';
-import Home from './Home.js';
 
 class Carousel {
   constructor(element, options) {
@@ -20,10 +19,12 @@ class Carousel {
 
     thisCarousel.dom = {};
     thisCarousel.dom.homeWidget = document.querySelector(select.containerOf.homeWidget);
-    console.log(thisCarousel.dom);
+    console.log(thisCarousel.dom.homeWidget);
   }
 
-  initPlugin() {
+  initPlugin(options) {
+
+    const thisCarousel = this;
     console.log(thisCarousel.dom);
     var elem = thisCarousel.dom.homeWidget;
     var flkty = new Flickity(elem, options);
