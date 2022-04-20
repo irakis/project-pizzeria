@@ -1,17 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Pizzeria</title>
-  <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Lato:400,300i,700%7COswald:300,500,700&amp;subset=latin-ext"
+    rel="stylesheet">
   <link href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
   <link rel="stylesheet" href="vendor/range-slider.min.css">
   <link rel="stylesheet" href="https://unpkg.com/flickity@2/dist/flickity.min.css">
+  <script src="https://kit.fontawesome.com/162d267160.js" crossorigin="anonymous"></script>
   <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
 
   <header class="header">
@@ -242,76 +246,88 @@
       </form>
     </div>
   </script>
-
-
   <script id="template-home-widget" type="text/x-handlebars-template">
     <div class="home-main">
         <div class="home-row">
           <div class="home-order">
-            <h1 class="booking-option-title">ORDER ONLINE</h1>
+            <a href="#order" class="button-link">
+              <h1 class="booking-option-title">ORDER ONLINE</h1>
+            </a>
             <p>Delicious food delivered to your door</p>
           </div>
           <div class="row book-a-table">
-            <h1>BOOK A TABLE</h1>
+            <a href="#booking" class="button-link"><h1>BOOK A TABLE</h1></a>
           </div>
         </div>
         <div class="home-row">
           <div class="home-opening-hours">
             <h1>OPENING HOURS:</h1>
-            <p>{opening hours }</p>
+            <p>MON-SUN,12PM-11PM</p>
           </div>
         </div>
         <div class="main-carousel" ><!----CARROUSELL--->
             <div class="carousel-cell">
-              <div class="carousel-cell-wrap">
                 <img src="./images/home/pizza-3.jpg" alt="picture">
                 <div class="opinion">
-                  <h2>Good restaurent!</h2>
+                  <h4>All Good restaurent!</h4>
                   <p>It is my great opinion. Best food and reliable srvice.
                     All prices ere cheap. I can reccoment id for all peple.</p>
-                  <h4>---Signature here</h4>
+                  <h2>-Margaret Mar</h2>
                 </div>
-              </div>
             </div>
             <div class="carousel-cell">
               <img src="./images/home/pizza-3.jpg" alt="picture">
               <div class="opinion">
-                <h2>Good restaurent!</h2>
+                <h4>Good restaurent!</h4>
                 <p>It is my great opinion. Best food and reliable srvice.
                   All prices ere cheap. I can reccoment id for all peple.</p>
-                <h4>---Signature here</h4>
+                <h2>-John Doe</h2>
               </div></div>
             <div class="carousel-cell">
               <img src="./images/home/pizza-3.jpg" alt="picture">
                 <div class="opinion">
-                  <h2>Good restaurent!</h2>
+                  <h4>Amazing restaurant!</h4>
                   <p>It is my great opinion. Best food and reliable srvice.
                     All prices ere cheap. I can reccoment id for all peple.</p>
-                  <h4>---Signature here</h4>
+                  <h2>-Private Kovalsky</h2>
                 </div>
             </div>
             <div class="carousel-cell">
               <img src="./images/home/pizza-3.jpg" alt="picture">
                 <div class="opinion">
-                  <h2>Good restaurent!</h2>
+                  <h4>Nice restaurent!</h4>
                   <p>It is my great opinion. Best food and reliable srvice.
                     All prices ere cheap. I can reccoment id for all peple.</p>
-                  <h4>---Signature here</h4>
+                  <h2>---Signature here</h2>
                 </div>
             </div>
         </div> <!----CARROUSELL--->
         <div class="home-pictures">
-          <div class="row">picture1</div>
-          <div class="row">picture2</div>
-          <div class="row">picture3</div>
+          <div class="row">
+            <ul class="icons">
+              <li>
+                <a href="#">
+                <i class="fa-solid fa-heart"></i>
+                </a>
+              </li>
+              <li>
+                <a href="#">
+                <i class="fa-solid fa-share-nodes"></i>
+                </a>
+              </li>
+            </ul>
+            <img src="./images/home/pizza-4.jpg">
+          </div>
+          <div class="row"><img src="./images/home/pizza-5.jpg"></div>
+          <div class="row"><img src="./images/home/pizza-6.jpg"></div>
         </div>
         <div class="home-pictures">
-          <div class="row">picture4</div>
-          <div class="row">picture5</div>
-          <div class="row">picture6</div>
+          <div class="row"><img src="./images/home/pizza-7.jpg"></div>
+          <div class="row"><img src="./images/home/pizza-8.jpg"></div>
+          <div class="row"><img src="./images/home/pizza-9.jpg"></div>
         </div>
         <div class="instagram">
-          <a class="instagram" href="#">View more on Instagram</a>
+          <a class="instagram" href="#"><p>View more on Instagram</p></a>
         </div>
       </div>
   </script>
@@ -322,4 +338,5 @@
   <script src="vendor/range-slider.min.js" type="module"></script>
   <script src="js/app.js" type="module"></script>
 </body>
+
 </html>

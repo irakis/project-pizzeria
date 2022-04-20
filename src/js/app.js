@@ -8,13 +8,15 @@ import Home from './components/Home.js';
 const app = {
   initPages: function () {
     const thisApp = this;
-    thisApp.pages= document.querySelector(select.containerOf.pages).children;
-    thisApp.navLinks= document.querySelectorAll(select.nav.links);
-    const idFromHash = window.location.hash.replace('#/','');
+    thisApp.pages = document.querySelector(select.containerOf.pages).children;
+    thisApp.navLinks = document.querySelectorAll(select.nav.links);
+    thisApp.buttonLinks = document.querySelectorAll(select.nav.buttonLinks); //ADDED
+    console.log(thisApp.buttonLinks);//ADDED
+    const idFromHash = window.location.hash.replace('#/', '');
     let pageMatchingHash = thisApp.pages[0].id;
 
-    for(let page of thisApp.pages){
-      if(page.id == idFromHash){
+    for (let page of thisApp.pages) {
+      if (page.id == idFromHash) {
         pageMatchingHash = page.id;
         break;
       }
@@ -22,15 +24,28 @@ const app = {
 
     thisApp.activatePage(pageMatchingHash);
 
-    for(let link of thisApp.navLinks ){
-      link.addEventListener('click', function(event){
+    for (let link of thisApp.navLinks) {
+      link.addEventListener('click', function (event) {
         const clickedElement = this;
         event.preventDefault();
-        const id = clickedElement.getAttribute('href').replace('#','');
+        const id = clickedElement.getAttribute('href').replace('#', '');
         thisApp.activatePage(id);
         window.location.hash = '#/' + id;
       });
     }
+    //ADDED START
+    for (let buttonLink of thisApp.buttonLinks) {
+      console.lof(buttonLink);
+      buttonLink.addEventListener('click', function (event) {
+        const clickedElement = this;
+        event.preventDefault();
+        const id = clickedElement.getAttribute('href').replace('#', '');
+        thisApp.activatePage(id);
+        window.location.hash = '#/' + id;
+      });
+    }
+    //ADDED END
+
   },
 
   activatePage: function (pageId) {
@@ -86,13 +101,13 @@ const app = {
     });
   },
 
-  initBookig: function() {
+  initBookig: function () {
     const thisApp = this;
     thisApp.booking = document.querySelector(select.containerOf.booking);
     new Booking(thisApp.booking);
   },
 
-  initHome: function() {
+  initHome: function () {
     const thisApp = this;
     thisApp.home = document.querySelector(select.containerOf.home);
     console.log(thisApp.home);

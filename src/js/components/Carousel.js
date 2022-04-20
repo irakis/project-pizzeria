@@ -26,8 +26,8 @@ class Carousel {
 
     const thisCarousel = this;
     console.log(thisCarousel.dom);
-    var elem = thisCarousel.dom.homeWidget;
-    var flkty = new Flickity(elem, options);
+    const elem = thisCarousel.dom.homeWidget;
+    new Flickity(elem, options);
   }
 }
 

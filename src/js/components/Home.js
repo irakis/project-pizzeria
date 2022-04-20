@@ -17,7 +17,6 @@ class Home {
     const elementDom = utils.createDOMFromHTML(generatedHTML);
     console.log('elementDom w Home: ', elementDom);
 
-
     thisHome.dom = {};
     thisHome.dom.wrapper = document.querySelector(select.containerOf.home);
     thisHome.dom.homeWidget = document.querySelector(select.containerOf.homeWidget);
@@ -28,7 +27,7 @@ class Home {
   initWidgets() {
     const thisHome = this;
     new Carousel(thisHome.dom.homeWidget, {
-      autoPaly: true,
+      autoPlay: true,
       wrapAround: true,
       cellAlign: 'center',
       contain: true,
