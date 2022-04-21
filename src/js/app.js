@@ -10,8 +10,6 @@ const app = {
     const thisApp = this;
     thisApp.pages = document.querySelector(select.containerOf.pages).children;
     thisApp.navLinks = document.querySelectorAll(select.nav.links);
-    thisApp.buttonLinks = document.querySelectorAll(select.nav.buttonLinks); //ADDED
-    console.log(thisApp.buttonLinks);//ADDED
     const idFromHash = window.location.hash.replace('#/', '');
     let pageMatchingHash = thisApp.pages[0].id;
 
@@ -33,19 +31,6 @@ const app = {
         window.location.hash = '#/' + id;
       });
     }
-    //ADDED START
-    for (let buttonLink of thisApp.buttonLinks) {
-      console.lof(buttonLink);
-      buttonLink.addEventListener('click', function (event) {
-        const clickedElement = this;
-        event.preventDefault();
-        const id = clickedElement.getAttribute('href').replace('#', '');
-        thisApp.activatePage(id);
-        window.location.hash = '#/' + id;
-      });
-    }
-    //ADDED END
-
   },
 
   activatePage: function (pageId) {
@@ -112,6 +97,19 @@ const app = {
     thisApp.home = document.querySelector(select.containerOf.home);
     console.log(thisApp.home);
     new Home(thisApp.home);
+    thisApp.buttonLinks = document.querySelectorAll(select.nav.buttonLinks); //ADDED
+    console.log(thisApp.buttonLinks);//ADDED
+    //ADDED START
+    for (let buttonLink of thisApp.buttonLinks) {
+      console.log(buttonLink);
+      buttonLink.addEventListener('click', function (event) {
+        const clickedElement = this;
+        event.preventDefault();
+        const id = clickedElement.getAttribute('href').replace('#', '');
+        thisApp.activatePage(id);
+        window.location.hash = '#/' + id;
+      });
+    }//ADDED END
   }
 };
 

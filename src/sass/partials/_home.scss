@@ -150,26 +150,33 @@ $transition-main: 1.5s;
   opacity: 1;
 }
 
+/*Footer*/
 .instagram {
   height: 100px;
   height: 120px;
   color: #ff6b6b;
   text-align: left;
-  padding-top: 50px;
-  padding-left: 45px;
+  padding-top: 30px;
+  padding-left: 5px;
+
+  a {
+    padding: 0;
+  }
 
   p {
     color: #ff6b6b;
+    margin: 0;
   }
 }
 
 /*Icons*/
+
 .row ul {
   position: absolute;
   margin: 0;
   padding: 0;
 
-  a {
+  a i {
     color: white;
   }
 }
@@ -180,20 +187,34 @@ $transition-main: 1.5s;
   margin: 10px;
 }
 
-.icons li a {
+.icons li a i {
   visibility: hidden;
 }
 
-.row:hover .icons li a {
-  visibility: visible;
-  color: $color-main;
-  font-size: 30px;
-  transition: $transition-main;
-  
-  img {
+.row img {
+  pointer-events: none;
+
+  &:hover {
     opacity: 0.8;
   }
 }
+
+.row {
+  pointer-events: auto;
+
+  .icons:hover li a i {
+    visibility: visible;
+    font-size: 30px;
+    transition: $transition-main;
+    color: white;
+
+    &:hover {
+      pointer-events: auto;
+      color: $color-main;
+    }
+  }
+}
+
 
 /*Carousel*/
 
@@ -208,7 +229,6 @@ $transition-main: 1.5s;
 }
 
 .carousel-cell img {
-  //display: inline-block;
   width: 50%;
   height: 100%;
   object-fit: cover;
