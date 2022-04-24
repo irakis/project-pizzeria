@@ -3,11 +3,11 @@ import { templates, select } from '../settings.js';
 
 class Carousel {
   constructor(element, options) {
-        
+
     //const thisCarousel= this;
     this.render(element);
     this.initPlugin(options);
-       
+
   }
 
   render() {

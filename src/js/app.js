@@ -21,8 +21,12 @@ const app = {
     }
 
     thisApp.activatePage(pageMatchingHash);
+    thisApp.addLinkListener(thisApp.navLinks);
+  },
+  addLinkListener(links) {
+    const thisApp = this;
 
-    for (let link of thisApp.navLinks) {
+    for (let link of links) {
       link.addEventListener('click', function (event) {
         const clickedElement = this;
         event.preventDefault();
@@ -32,6 +36,7 @@ const app = {
       });
     }
   },
+
 
   activatePage: function (pageId) {
     const thisApp = this;
@@ -98,18 +103,10 @@ const app = {
     console.log(thisApp.home);
     new Home(thisApp.home);
     thisApp.buttonLinks = document.querySelectorAll(select.nav.buttonLinks); //ADDED
-    console.log(thisApp.buttonLinks);//ADDED
-    //ADDED START
-    for (let buttonLink of thisApp.buttonLinks) {
-      console.log(buttonLink);
-      buttonLink.addEventListener('click', function (event) {
-        const clickedElement = this;
-        event.preventDefault();
-        const id = clickedElement.getAttribute('href').replace('#', '');
-        thisApp.activatePage(id);
-        window.location.hash = '#/' + id;
-      });
-    }//ADDED END
+    console.log(thisApp.buttonLinks);
+
+    thisApp.addLinkListener(thisApp.buttonLinks);
+
   }
 };
 

@@ -11,7 +11,7 @@ $transition-main: 1.5s;
 }
 
 .home-row {
-  background: $color-light;
+  background: $color-body;
   height: 140px;
   text-align: center;
   align-items: center;
@@ -135,17 +135,18 @@ $transition-main: 1.5s;
 /*Pictues*/
 
 .home-pictures {
-  height: 200px;
+  height: 400px;
   padding: 5px;
   display: flex;
+  flex-wrap: wrap;
   justify-content: space-between;
+  align-content: space-between;
 }
 
 .home-pictures .row img {
   width: 220px;
   height: 190px;
   display: inline-flex;
-  border-radius: 5px;
   object-fit: cover;
   opacity: 1;
 }
@@ -175,6 +176,7 @@ $transition-main: 1.5s;
   position: absolute;
   margin: 0;
   padding: 0;
+  z-index: 2;
 
   a i {
     color: white;
@@ -191,16 +193,27 @@ $transition-main: 1.5s;
   visibility: hidden;
 }
 
-.row img {
-  pointer-events: none;
-
-  &:hover {
-    opacity: 0.8;
-  }
-}
-
 .row {
-  pointer-events: auto;
+  position: relative;
+  border-radius: 5px;
+  overflow: hidden;
+
+  .over-lay {
+    opacity: 0;
+    top: 0;
+    left: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: black;
+    z-index: 1;
+  }
+  
+  &:hover {
+    .over-lay {
+      opacity: 0.5;
+    }
+  }
 
   .icons:hover li a i {
     visibility: visible;
