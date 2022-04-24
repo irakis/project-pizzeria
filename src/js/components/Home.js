@@ -15,8 +15,6 @@ class Home {
     const thisHome = this;
     const generatedHTML = templates.homeWidget();
     const elementDom = utils.createDOMFromHTML(generatedHTML);
-    console.log('elementDom w Home: ', elementDom);
-
     thisHome.dom = {};
     thisHome.dom.wrapper = document.querySelector(select.containerOf.home);
     thisHome.dom.homeWidget = document.querySelector(select.containerOf.homeWidget);
