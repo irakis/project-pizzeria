@@ -208,22 +208,22 @@ $transition-main: 1.5s;
     background: black;
     z-index: 1;
   }
-  
+
   &:hover {
     .over-lay {
       opacity: 0.5;
     }
-  }
 
-  .icons:hover li a i {
-    visibility: visible;
-    font-size: 30px;
-    transition: $transition-main;
-    color: white;
+    .icons li a i {
+      visibility: visible;
+      font-size: 30px;
+      transition: $transition-main;
+      color: white;
 
-    &:hover {
-      pointer-events: auto;
-      color: $color-main;
+      &:hover {
+        pointer-events: auto;
+        color: $color-main;
+      }
     }
   }
 }
